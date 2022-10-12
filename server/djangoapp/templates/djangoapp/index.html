@@ -13,7 +13,7 @@
 
 </head>
 
-    <body>
+<body>
     <!--Add a nav bar here -->
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
@@ -45,7 +45,37 @@
         </div>
     </nav>
     <!--Add a dealer table here -->
-
+    <div class="container">
+        <h3>Dealerships</h3>
+        <table class="table table-striped" id="table" data-filter-control="true">
+            <thead>
+                <tr>
+                    <th>ID</td>
+                    <th>Dealer Name</td>
+                    <th>City</td>
+                    <th>Address</td>
+                    <th>Zip</td>
+                     <th data-field="state" data-filter-control="select">State</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for dealer in dealership_list %}
+                <tr>
+                    <td>{{dealer.id}}</td>
+                    <td><a href="{% url 'djangoapp:dealer_details' dealer.id %}">{{dealer.full_name}}</a></td>
+                    <td>{{dealer.city}}</td>
+                    <td>{{dealer.address}}</td>
+                    <td>{{dealer.zip}}</td>
+                    <td>{{dealer.st}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
     </body>
-
+    <script>
+        $(function() {
+            $('#table'.bootstrapTable())
+        })
+    </script>
 </html>

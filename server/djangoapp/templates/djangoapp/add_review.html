@@ -11,6 +11,56 @@
 
 </head>
     <body>
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Dealership Review</a> &#9881; <a href="about">About Us</a> &#9881; <a href="contact">Contact Us</a>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    {% if user.is_authenticated %}
+                    <li>
+                        <button class="dropbtn">{{ user.username }}</button>
+                        <div class="dropdown-content">
+                            <a href="{% url 'djangoapp:logout' %}">Log Out</a>
+                        </div>
+                    </li>
+                    {% else %}
+                    <li>
+                        <form class="form-inline" action="{% url 'djangoapp:login' %}" method="post">
+                            {% csrf_token %}
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Username" name="username">
+                                <input type="password" class="form-control" placeholder="Password" name="pwd">
+                                <button class="btn btn-primary" type="submit">Log In</button>
+                                <a class="btn btn-link" href="{% url 'djangoapp:registration' %}">Sign Up</a>
+                            </div>
+                        </form>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
     <!--Add review form here -->
+    <div class="container">
+        <form action="{% url 'djangoapp:add_review' dealer_id %}" method="POST">
+            <h3>Add a review</h3>
+            <label for="content"><em>Please enter your review: </em></label><br/>
+            <textarea class="form-control" id="content" name="content" rows="2" required></textarea>
+            <label for="purchasecheck"><em>Have you purchased a car from this dealer before? </em></label>
+            <input class="form-check-input" type="checkbox" name="purchasecheck" id="purchasecheck">
+            <label for="car"><em>Select the car you purchased: </em></label>
+            <select name="car" id="car" class="form-select" required>
+                {% for car in cars %}
+                <option selected value="{{car.make.name}}|{{car.name}}|{{ car.year|date:'Y' }}">{{ car.year|date:"Y" }} {{car.make.name}} {{car.name}}</option>
+                {% endfor %}
+            </select>
+            <label for="purchasedate"><em>When did you purchase a car from this dealer?</em></label>
+            <input class="date own form-control" type="date" name="purchasedate" id="purchasedate">
+            <div>
+                {% csrf_token %}
+                <button class="button" type="submit">Submit Review</button>
+            </div>
+        </form>
+    </div>
     </body>
 </html>
