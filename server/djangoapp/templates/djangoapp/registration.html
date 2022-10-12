@@ -6,6 +6,48 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
     <body>
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Dealership Review</a> &#9881; <a href="about">About Us</a> &#9881; <a href="contact">Contact Us</a>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    {% if user.is_authenticated %}
+                    <li>
+                        <button class="dropbtn">{{ user.username }}</button>
+                        <div class="dropdown-content">
+                            <a href="{% url 'djangoapp:logout' %}">Log Out</a>
+                        </div>
+                    </li>
+                    {% else %}
+                    <li>
+                        <form class="form-inline" action="{% url 'djangoapp:login' %}" method="post">
+                            {% csrf_token %}
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Username" name="username">
+                                <input type="password" class="form-control" placeholder="Password" name="pwd">
+                                <button class="btn btn-primary" type="submit">Log In</button>
+                                <a class="btn btn-link" href="{% url 'djangoapp:registration' %}">Sign Up</a>
+                            </div>
+                        </form>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
     <!--Add a registration form here -->
+    <div class="container">
+        <form action="{% url 'djangoapp:registration' %}" method="post">
+            <h3>Sign Up</h3>
+            <label for="first-name">First Name: </label><input type="text" name="first-name"><br/>
+            <label for="last-name">Last Name: </label><input type="text" name="last-name"><br/>
+            <label for="username">Username: </label><input type="text" name="username" required><br/>
+            <label for="pwd">Password: </label><input type="password" name="pwd" required><br/>
+            <div>
+                {% csrf_token %}
+                <button class="button" type="submit">Sign Up</button>
+            </div>
+        </form>
+    </div>
     </body>
 </html>
