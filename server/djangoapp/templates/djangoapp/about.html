@@ -12,6 +12,28 @@
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">Dealership Review</a> &#9881; <a href="about">About Us</a> &#9881; <a href="contact">Contact Us</a>
             </div>
+            <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                <li>
+                    <button class="dropbtn">{{ user.username }}</button>
+                    <div class="dropdown-content">
+                        <a href="{% url 'djangoapp:logout' %}">Log Out</a>
+                    </div>
+                </li>
+                {% else %}
+                <li>
+                    <form class="form-inline" action="{% url 'djangoapp:login' %}" method="post">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Username" name="username">
+                            <input type="password" class="form-control" placeholder="Password" name="pwd">
+                            <button class="btn btn-primary" type="submit">Log In</button>
+                            <a class="btn btn-link" href="{% url 'djangoapp:registration' %}">Sign Up</a>
+                        </div>
+                    </form>
+                </li>
+                {% endif %}
+            </ul>
         </div>
     </nav>
     <div class="container">
