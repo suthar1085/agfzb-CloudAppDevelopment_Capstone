@@ -27,7 +27,7 @@ DEBUG = True
 
 APPEND_SLASH = True
 
-ALLOWED_HOSTS = ["dineshsuthar034.au-syd.cf.appdomain.cloud","localhost"]
+ALLOWED_HOSTS = ["dineshsuthar034.au-syd.cf.appdomain.cloud","localhost","finalprojectcapstonealphi.au-syd.cf.appdomain.cloud"]
 
 
 # Application definition
